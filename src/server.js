@@ -4,6 +4,7 @@ const path = require('path');
 
 const configViewEngine = require('./config/viewEngine')
 const webRoutes = require('./routes/web')
+const connection = require('./config/database')
 
 const app = express()
 const port = process.env.PORT || 8888;
@@ -21,6 +22,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/v1', webRoutes)
 
+//test connection
+
+connection.query(
+  'SELECT * FROM Will.Users u',
+  function (err, results, fields) {
+    console.log('>>>>>>>>>>results: ',results);
+
+  }
+);
+
+
+
 app.listen(port, hostname, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Server has been start on ${port}`)
+  //console.log(connection)
 })
